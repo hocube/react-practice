@@ -11,6 +11,7 @@ function App() {
   let [좋아요, 좋아요변경] = useState([0, 0, 0]);
   let [modal, setModal] = useState(false);
   let [title, setTitle] = useState(0);
+  let [입력값, 입력값변경] = useState('');
 
   return (
     <div className="App">
@@ -35,7 +36,7 @@ function App() {
           return (
           <div className='list' key={i}>
             <h4 onClick={()=>{ setModal(true); setTitle(i)}}>{ 글제목[i] } 
-              <span onClick={()=>{
+              <span onClick={(e)=>{ e.stopPropagation();
                 let copy좋아요 = [...좋아요];
                 copy좋아요[i] = copy좋아요[i]+1;
                 좋아요변경(copy좋아요)}}>👍</span> {좋아요[i]} 
@@ -45,6 +46,8 @@ function App() {
           )
         })
       }
+
+      <input onChange={(e)=>{입력값변경(e.target.value); console.log(입력값)}}/>
 
       {
         modal ==  true ? <Modal 글제목={글제목} title={title}/> : null
