@@ -42,16 +42,22 @@ function App() {
                 좋아요변경(copy좋아요)}}>👍</span> {좋아요[i]} 
             </h4>
             <p>12월 21일 발행</p>
+            <button onClick={()=>{
+              let copy삭제 = [...글제목];
+              copy삭제.splice(i, 1);
+              글제목변경(copy삭제);
+            }}>삭제</button>
           </div>
           )
         })
       }
 
-      <input onChange={(e)=>{입력값변경(e.target.value); console.log(입력값)}}/>
+      <input onChange={(e)=>{입력값변경(e.target.value); }}/>
       <button onClick={()=>{
-        글제목.unshift(입력값);
-        console.log(글제목);
-      }}>글발행</button>
+        let copy=[...글제목];  
+        copy.unshift(입력값);
+        글제목변경(copy);
+      }}>글발행</button> 
 
       {
         modal ==  true ? <Modal 글제목={글제목} title={title}/> : null
