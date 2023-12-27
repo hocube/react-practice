@@ -29,7 +29,7 @@ function App() {
         let copy1 = [...글제목];
         copy1 = [...글제목].sort();
         글제목변경(copy1);
-      }}>가나다정렬</button>
+      }}>가나다정렬</button> 
 
       {
         글제목.map(function(a, i){
@@ -48,6 +48,10 @@ function App() {
       }
 
       <input onChange={(e)=>{입력값변경(e.target.value); console.log(입력값)}}/>
+      <button onClick={()=>{
+        글제목.unshift(입력값);
+        console.log(글제목);
+      }}>글발행</button>
 
       {
         modal ==  true ? <Modal 글제목={글제목} title={title}/> : null
