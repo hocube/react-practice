@@ -91,4 +91,15 @@ function Modal(props) {
   )
 }
 
+class Modal2 extends React.Component {
+  constructor(){
+    super()
+  }
+  render(){
+    return(
+      <div>안녕?</div>
+    )
+  }
+}
+
 export default App;
