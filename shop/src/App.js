@@ -2,8 +2,13 @@ import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Container, Nav } from 'react-bootstrap';
+import { useState } from 'react';
+import data from './data.js';
 
 function App() {
+
+  let [product] = useState(data);
+
   return (
     <div className="App">
       <Navbar bg="light" data-bs-theme="light">
@@ -20,25 +25,28 @@ function App() {
       
       <div className="container">
         <div className="row">
-          <div className="col-md-4">
-            <img src={process.env.PUBLIC_URL + '/feed.jpg'} />
-            <h5>강아지사료 웰비 스타 5kg</h5>
-            <p>34,900원</p>
-          </div>
-          <div className="col-md-4">
-            <img src={process.env.PUBLIC_URL + '/nutrients.png' } />
-            <h5>멍멍비타 면역력 강아지 영양제 베타글루칸 1개월분 90g</h5>
-            <p>28,800원</p>
-          </div>
-          <div className="col-md-4">
-            <img src={process.env.PUBLIC_URL + '/snack.jpg' } />
-            <h5>모모 고구마사사미 300g X 5개 강아지간식</h5>
-            <p>13,000원</p>
-          </div>
+          {
+            product.map((a, i)=>{
+              return(
+                <Product_List product={product[i]} />
+              )
+            })
+          }
       </div>
-</div> 
-    </div>
+    </div> 
+  </div>
   );
+}
+
+function Product_List(props){
+  return(
+    <div className="col-md-4">
+      <img src={process.env.PUBLIC_URL + props.product.img} style={{ width: '60%' }}/>
+      <h5>{props.product.title}</h5>
+      <p>{props.product.content}</p>
+      <p>{props.product.price.toLocaleString() + "원"}</p>
+   </div>
+  )
 }
 
 export default App;
