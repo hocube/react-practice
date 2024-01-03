@@ -37,7 +37,8 @@ function App() {
             </div>
           }
         />
-        <Route path="/detail" element={<Detail/>} />
+        <Route path="/detail/:id" element={<Detail product={product} />} />
+
         <Route path="*" element={<div>없는 페이지 입니다.</div>} />
 
         <Route path="/about" element={<About/>}>
