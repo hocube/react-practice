@@ -1,4 +1,16 @@
 import { useParams } from "react-router-dom";
+import styled from 'styled-components';
+
+let YellowBtn = styled.button`
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  line-height: 1.5;
+  height: 40px;
+  border: 0px;
+  background : ${ props => props.bg };
+  color : ${ props => props.bg == 'blue' ? 'white' : 'black'};
+  `;
 
 function Detail(props) {
 
@@ -15,6 +27,7 @@ function Detail(props) {
           <p>{props.product[id].content}</p>
           <p>{props.product[id].price}원</p>
           <button className="btn btn-danger">주문하기</button>
+          <YellowBtn bg="orange">장바구니</YellowBtn>
         </div>
       </div>
     </div>
