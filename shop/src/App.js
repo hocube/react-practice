@@ -5,6 +5,7 @@ import { Navbar, Container, Nav } from "react-bootstrap";
 import { useState } from "react"
 import data from "./data.js"
 import Detail from './pages/Detail.js'
+import axios from 'axios'
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 
 function App() {
@@ -34,6 +35,16 @@ function App() {
                   })}
                 </div>
               </div>{" "}
+              <button onClick={()=>{
+                axios.get('https://codingapple1.github.io/shop/data2.json')
+                .then((result)=>{ 
+                  console.log(result.data)
+                 })
+                 .catch(()=>{
+                  console.log('실패했슝')
+                 })
+
+              }}>더보기 버튼</button>
             </div>
           }
         />
