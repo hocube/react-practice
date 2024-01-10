@@ -17,11 +17,13 @@ function Detail(props) {
 
   let{id} = useParams();
   let [count, setCount] = useState(0)
-  let [alert, setAlert] = useState(true)     // true로 바꾸면 노란박스 보이게, false로 바꾸면 안보이게.
+  let [showAlert, setShowAlert] = useState(true)     
+  let [showDiscountAlert, setShowDiscountAlert] = useState(true); // true로 바꾸면 노란박스 보이게, false로 바꾸면 안보이게.
+
   let [num, setNum] = useState('')
 
   useEffect(()=>{
-    let timer = setTimeout(()=>{setAlert(false)}, 2000)
+    let timer = setTimeout(()=>{setShowDiscountAlert(false)}, 2000)
     return()=>{
       clearTimeout(timer);
     }
@@ -36,7 +38,7 @@ function Detail(props) {
   return (
     <div className="container">
       {
-         alert == true
+         showDiscountAlert == true
          ? <div className="alert alert-warning"> 2초 이내 구매시 할인 </div> : null
       }
       <div className="row">
