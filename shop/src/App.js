@@ -9,7 +9,7 @@ import axios from 'axios'
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 
 function App() {
-  let [product] = useState(data);
+  let [product, setProduct] = useState(data);
   let navigate = useNavigate();
 
   return (
@@ -31,14 +31,15 @@ function App() {
               <div className="container">
                 <div className="row">
                   {product.map((a, i) => {
-                    return <Product_List product={product[i]} />;
+                    return <Product_List product={product[i]} i={i} key={i}/>;
                   })}
                 </div>
               </div>{" "}
               <button onClick={()=>{
-                axios.get('https://codingapple1.github.io/shop/data2.json')
+                axios.get('https://gist.githubusercontent.com/hocube/1da7412e8d567e9d7a728403517ab974/raw/f39e616a6ea694a9c04ebcb5b8992cc8282fd713/product.json')
                 .then((result)=>{ 
-                  console.log(result.data)
+                  let copy = [...product, ...result.data]
+                  setProduct(copy)
                  })
                  .catch(()=>{
                   console.log('실패했슝')
