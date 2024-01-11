@@ -36,16 +36,18 @@ function App() {
                 </div>
               </div>{" "}
               <button onClick={()=>{
-                axios.get('https://gist.githubusercontent.com/hocube/1da7412e8d567e9d7a728403517ab974/raw/f39e616a6ea694a9c04ebcb5b8992cc8282fd713/product.json')
+                // 로딩중 ui 듸우기~
+                axios.get('https://gist.githubusercontent.com/hocube/1da7412e8d567e9d7a728403517ab974/raw/8ee61feac6da846fbd7367e7ee6955ca76e2fb91/product.json')
                 .then((result)=>{ 
                   let copy = [...product, ...result.data]
                   setProduct(copy)
+                  // 로딩중 ui 숨기기
                  })
                  .catch(()=>{
-                  console.log('실패했슝')
+                  // 로딩중 ui 숨기기
                  })
 
-              }}>더보기 버튼</button>
+              }}>더보기</button>
             </div>
           }
         />
