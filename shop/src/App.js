@@ -9,9 +9,10 @@ import axios from 'axios'
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 
 function App() {
-  let [product, setProduct] = useState(data);
-  let navigate = useNavigate();
-  let count = 0;
+  let [product, setProduct] = useState(data)
+  let navigate = useNavigate()
+  let [loding, setLoding] = useState(false)
+  let [count, setCount] = useState(1)
 
   return (
     <div className="App">
@@ -36,23 +37,30 @@ function App() {
                   })}
                 </div>
               </div>{" "}
+
+              {
+                loding === true ?  <LodingUI /> : null
+              }
+
               <button onClick={()=>{
-                // 로딩중 ui 듸우기~
-                count = count+1;
+                setLoding(true)    // 로딩중 UI 띄우기
+                setCount(count+1);
                 console.log(count)
+
                 if(count === 1){
                 axios.get('https://gist.githubusercontent.com/hocube/1da7412e8d567e9d7a728403517ab974/raw/8ee61feac6da846fbd7367e7ee6955ca76e2fb91/product.json')
                 .then((result)=>{ 
                   let copy = [...product, ...result.data]
                   setProduct(copy)
-                  // 로딩중 ui 숨기기
                  })
                  .catch(()=>{
-                  // 로딩중 ui 숨기기
+                 })
+                 .finally(()=>{
+                  setTimeout(()=>{ setLoding(false) }, 2000)
                  })
                 }
 
-                if(count === 2){
+                else if(count === 2){
                 axios.get('https://gist.githubusercontent.com/hocube/a4481db778a2543a901504d478ace598/raw/52d3e0fd3199eaaac5600db1329d9adccbf45bf5/product2.json')
                 .then((result)=>{ 
                   let copy = [...product, ...result.data]
@@ -60,12 +68,17 @@ function App() {
                  })
                  .catch(()=>{
                  })
+                 .finally(()=>{
+                  setLoding(false)
+                 })
                 }
 
-                else{
+                else if(count > 2) {
                   alert("상품이 없습니다")
+                  setLoding(false)  // 로딩중 UI 숨기기
                 }
               }}>더보기</button>
+
             </div>
           }
 
@@ -115,6 +128,12 @@ function Product_List(props) {
       <p>{props.product.price.toLocaleString() + "원"}</p>
     </div>
   );
+}
+
+function LodingUI(){
+  return(
+    <div className="alert alert-warning">로딩중 입니다.</div>
+  )
 }
 
 export default App;
