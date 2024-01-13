@@ -22,6 +22,15 @@ function Detail(props) {
   let [showDiscountAlert, setShowDiscountAlert] = useState(true); // true로 바꾸면 노란박스 보이게, false로 바꾸면 안보이게.
   let [num, setNum] = useState('')
   let [tap, setTap] = useState(0)
+  let [DetailFade, setDetailFade] = useState('')
+
+  useEffect(()=>{
+    setTimeout(()=>{ setDetailFade('end') }, 400)
+    // setDetailFade('end')
+    return ()=>{
+      setDetailFade('')
+    }
+  }, [])
 
   useEffect(()=>{
     let timer = setTimeout(()=>{setShowDiscountAlert(false)}, 2000)
@@ -37,6 +46,7 @@ function Detail(props) {
   }, [num])
 
   return (
+  <div className={'container start ' + DetailFade}>
     <div className="container">
       {
          showDiscountAlert == true
@@ -58,24 +68,40 @@ function Detail(props) {
 
       <Nav variant="tabs" defaultActiveKey="link0">
       <Nav.Item>
-        <Nav.Link href="link0">버튼0</Nav.Link>
+        <Nav.Link onClick={()=>{setTap(0)}} eventKey="link0">상세정보</Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link onClick={()=>{setTap(1)}} eventKey="link1">버튼1</Nav.Link>
+        <Nav.Link onClick={()=>{setTap(1)}} eventKey="link1">구매후기</Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link onClick={()=>{setTap(2)}} eventKey="link2">버튼2</Nav.Link>
+        <Nav.Link onClick={()=>{setTap(2)}} eventKey="link2">상품문의</Nav.Link>
       </Nav.Item>
     </Nav>
 
     <TapContent tap={tap}/>
 
     </div>
+  </div>
   );
 }
 
 function TapContent({tap}){
-  if (tap == 0){
+
+  let [fade, setFade] = useState('')
+
+  // tap state가 변할 때 end 부착
+  useEffect(()=>{
+    setTimeout(()=>{ setFade('end') }, 100)
+    return ()=>{
+      setFade('')
+    }
+  }, [tap])
+
+  return (<div className={'start ' + fade}>
+    { [<div>내용0</div>, <div>강아지한테 좋대요 멍멍</div>, <div>고양이도 먹어도 될까요????</div>][tap] }
+  </div>)
+
+  /* if (tap == 0){
     return <div>내용0</div>
   } 
   if (tap == 1){
@@ -83,9 +109,7 @@ function TapContent({tap}){
   } 
   if (tap == 2){
     return <div>내용2</div>
-  }
-
-  // return [<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][tap]
+  } */
 }
 
 export default Detail;

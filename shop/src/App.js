@@ -42,41 +42,42 @@ function App() {
                 loding === true ?  <LodingUI /> : null
               }
 
-              <button onClick={()=>{
-                setLoding(true)    // 로딩중 UI 띄우기
-                setCount(count+1);
-                console.log(count)
-
+              <button onClick={ async ()=>{
+                // 'async'는 비동기 작업을 수행할 것임을 나타낸다.
+                try {
+                setLoding(true);    // 로딩중 UI 띄우기
+                console.log('1. 더보기 눌렀음. 로딩UI 활성화');
+                let url = '';
                 if(count === 1){
-                axios.get('https://gist.githubusercontent.com/hocube/1da7412e8d567e9d7a728403517ab974/raw/8ee61feac6da846fbd7367e7ee6955ca76e2fb91/product.json')
-                .then((result)=>{ 
-                  let copy = [...product, ...result.data]
-                  setProduct(copy)
-                 })
-                 .catch(()=>{
-                 })
-                 .finally(()=>{
-                  setTimeout(()=>{ setLoding(false) }, 2000)
-                 })
+                  url = 'https://gist.githubusercontent.com/hocube/1da7412e8d567e9d7a728403517ab974/raw/8ee61feac6da846fbd7367e7ee6955ca76e2fb91/product.json';
+                  console.log('2. url 결정. count 1');
+                } else if (count === 2){
+                  url = 'https://gist.githubusercontent.com/hocube/a4481db778a2543a901504d478ace598/raw/52d3e0fd3199eaaac5600db1329d9adccbf45bf5/product2.json';
+                  console.log('2. url 결정. count 2');
+                } else {
+                  alert("상품이 없습니다");
+                  setLoding(false);  // 로딩중 UI 숨기기
+                  return;
                 }
 
-                else if(count === 2){
-                axios.get('https://gist.githubusercontent.com/hocube/a4481db778a2543a901504d478ace598/raw/52d3e0fd3199eaaac5600db1329d9adccbf45bf5/product2.json')
-                .then((result)=>{ 
-                  let copy = [...product, ...result.data]
-                  setProduct(copy)
-                 })
-                 .catch(()=>{
-                 })
-                 .finally(()=>{
-                  setLoding(false)
-                 })
-                }
+                const result = await axios.get(url);
+                // 'await'는 axios.get(url)의 작업이 완료될 때까지 기다린다.
+                // 작업이 완료되면 그 결과를 result에 저장한다.
+                console.log('3. 데이터 요청.');
 
-                else if(count > 2) {
-                  alert("상품이 없습니다")
-                  setLoding(false)  // 로딩중 UI 숨기기
+                setTimeout(() => {
+                  setProduct([...product, ...result.data]); // 상품 목록 업데이트
+                  setLoding(false);   // 로딩중 UI 숨기기
+                  setCount(count+1);
+                }, 2000); // 2초 후 로딩 UI 비활성화
+                
+                } catch(error){
+                  console.log('API 호출 중 오류 발생:', error);
+                  setTimeout(() => {
+                    setLoding(false); // 로딩 UI 비활성화
+                  }, 2000); // 2초 후 로딩 UI 비활성화
                 }
+                console.log('4. 2초 후에 상품 목록을 업데이트하고 로딩 UI를 비활성화');
               }}>더보기</button>
 
             </div>
