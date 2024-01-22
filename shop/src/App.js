@@ -2,14 +2,19 @@ import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Navbar, Container, Nav } from "react-bootstrap";
-import { useState } from "react"
+import { createContext, useState } from "react"
 import data from "./data.js"
 import Detail from './pages/Detail.js'
 import axios from 'axios'
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
+import Cart from './pages/Cart.js'
+
+export let Context1 = createContext()
 
 function App() {
   let [product, setProduct] = useState(data)
+  let [stock] = useState([10, 11, 20])  // 재고
+
   let navigate = useNavigate()
   let [loding, setLoding] = useState(false)
   let [count, setCount] = useState(1)
@@ -84,7 +89,11 @@ function App() {
           }
 
         />
-        <Route path="/detail/:id" element={<Detail product={product} />} />
+        <Route path="/detail/:id" element={
+          <Detail product={product}/>
+        } />
+
+        <Route path="/cart" element={<Cart />} />
 
         <Route path="*" element={<div>없는 페이지 입니다.</div>} />
 

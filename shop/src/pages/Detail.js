@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from 'styled-components';
 import Nav from 'react-bootstrap/Nav';
+import { Context1 } from "./../App.js";
 
 let YellowBtn = styled.button`
   padding: 6px 12px;
@@ -15,6 +16,8 @@ let YellowBtn = styled.button`
   `;
 
 function Detail(props) {
+
+  let {stock} = useContext(Context1)
 
   let{id} = useParams();
   let [count, setCount] = useState(0)
@@ -52,6 +55,9 @@ function Detail(props) {
          showDiscountAlert == true
          ? <div className="alert alert-warning"> 2초 이내 구매시 할인 </div> : null
       }
+
+      <div>{stock}</div>
+
       <div className="row">
         <div className="col-md-6">
           <img src={props.product[id].img} width="100%"/>
@@ -98,7 +104,7 @@ function TapContent({tap}){
   }, [tap])
 
   return (<div className={'start ' + fade}>
-    { [<div>내용0</div>, <div>강아지한테 좋대요 멍멍</div>, <div>고양이도 먹어도 될까요????</div>][tap] }
+    { [<div>많이 사줘라</div>, <div>강아지한테 좋대요 멍멍</div>, <div>고양이도 먹어도 될까요????</div>][tap] }
   </div>)
 
   /* if (tap == 0){
