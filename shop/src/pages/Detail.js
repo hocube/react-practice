@@ -3,6 +3,9 @@ import { useParams } from "react-router-dom";
 import styled from 'styled-components';
 import Nav from 'react-bootstrap/Nav';
 import { Context1 } from "./../App.js";
+import { addItem } from "./../store.js";
+import { useDispatch } from "react-redux";
+
 
 let YellowBtn = styled.button`
   padding: 6px 12px;
@@ -26,6 +29,7 @@ function Detail(props) {
   let [num, setNum] = useState('')
   let [tap, setTap] = useState(0)
   let [DetailFade, setDetailFade] = useState('')
+  let dispatch = useDispatch()
 
   useEffect(()=>{
     setTimeout(()=>{ setDetailFade('end') }, 400)
@@ -56,7 +60,7 @@ function Detail(props) {
          ? <div className="alert alert-warning"> 2초 이내 구매시 할인 </div> : null
       }
 
-      <div>{stock}</div>
+     <div>{stock}</div>
 
       <div className="row">
         <div className="col-md-6">
