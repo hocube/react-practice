@@ -90,7 +90,11 @@ function App() {
 
         />
         <Route path="/detail/:id" element={
-          <Detail product={product}/>
+          <Context1.Provider value={ { stock } }>
+            <Detail product={product} />  
+          </Context1.Provider>
+          // product은 props 방식으로 데이터 전달
+          // stock은 context 방식으로 데이터 전달
         } />
 
         <Route path="/cart" element={<Cart />} />
