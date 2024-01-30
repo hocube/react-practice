@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import Nav from 'react-bootstrap/Nav';
 import { Context1 } from "./../App.js";
@@ -30,6 +30,7 @@ function Detail(props) {
   let [tap, setTap] = useState(0)
   let [DetailFade, setDetailFade] = useState('')
   let dispatch = useDispatch()
+  let navigate = useNavigate()
 
   useEffect(()=>{
     setTimeout(()=>{ setDetailFade('end') }, 400)
@@ -71,8 +72,10 @@ function Detail(props) {
           <h4 className="pt-5">{props.product[id].title}</h4>
           <p>{props.product[id].content}</p>
           <p>{props.product[id].price}원</p>
-          <button className="btn btn-danger">주문하기</button>
-          <YellowBtn bg="orange">장바구니</YellowBtn>
+          <button className="btn btn-danger" onClick={()=>{
+            dispatch(addItem( {id : 1, name : '냥이 치약', count : 27} ))
+            navigate('/cart')
+          }}>주문하기</button>
         </div>
       </div>
 
