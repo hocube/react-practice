@@ -2,7 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Navbar, Container, Nav } from "react-bootstrap";
-import { createContext, useState } from "react"
+import { createContext, useEffect, useState } from "react"
 import data from "./data.js"
 import Detail from './pages/Detail.js'
 import axios from 'axios'
@@ -12,6 +12,12 @@ import Cart from './pages/Cart.js'
 export let Context1 = createContext()
 
 function App() {
+
+  let obj = {name : 'jiho'}
+  localStorage.setItem('data', JSON.stringify(obj))
+  let 꺼낸거 = localStorage.getItem('data')
+  console.log(JSON.parse(꺼낸거).name)
+
   let [product, setProduct] = useState(data)
   let [stock] = useState([10, 11, 20])  // 재고
 

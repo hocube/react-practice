@@ -19,10 +19,10 @@ let YellowBtn = styled.button`
   `;
 
 function Detail(props) {
-
   let {stock} = useContext(Context1)
-
+  
   let{id} = useParams();
+  let 찾은상품 = props.product.find(x => x.id == id)
   let [count, setCount] = useState(0)
   let [showAlert, setShowAlert] = useState(true)     
   let [showDiscountAlert, setShowDiscountAlert] = useState(true); // true로 바꾸면 노란박스 보이게, false로 바꾸면 안보이게.
@@ -31,6 +31,17 @@ function Detail(props) {
   let [DetailFade, setDetailFade] = useState('')
   let dispatch = useDispatch()
   let navigate = useNavigate()
+  
+  useEffect(()=>{
+    let 꺼낸거 = localStorage.getItem('watched')
+    꺼낸거=JSON.parse(꺼낸거)
+    꺼낸거.push(찾은상품.id)
+
+    // set으로 바꿨다가 다시 array로 만들기
+    꺼낸거 = new Set(꺼낸거)
+    꺼낸거 = Array.from(꺼낸거)
+    localStorage.setItem('watched', JSON.stringify(꺼낸거))
+  }, [])
 
   useEffect(()=>{
     setTimeout(()=>{ setDetailFade('end') }, 400)
