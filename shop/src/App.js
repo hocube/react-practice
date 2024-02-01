@@ -2,13 +2,16 @@ import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Navbar, Container, Nav } from "react-bootstrap";
-import { createContext, useEffect, useState } from "react"
+import { lazy, Suspense, createContext, useEffect, useState } from "react"
 import data from "./data.js"
-import Detail from './pages/Detail.js'
 import axios from 'axios'
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
-import Cart from './pages/Cart.js'
 import { useQuery } from 'react-query';
+// import Detail from './pages/Detail.js'
+// import Cart from './pages/Cart.js'
+
+const Detail = lazy(() => import('./pages/Detail.js')); 
+const Cart = lazy(() => import('./pages/Cart.js'));
 
 export let Context1 = createContext()
 
@@ -49,6 +52,7 @@ function App() {
         </Container>
       </Navbar>
 
+      <Suspense fallback={<div>로딩 중입니다. 기다리시오.</div>}>
       <Routes>
         <Route path="/" element={
             <div>
@@ -108,9 +112,9 @@ function App() {
 
         />
         <Route path="/detail/:id" element={
-          <Context1.Provider value={ { stock } }>
-            <Detail product={product} />  
-          </Context1.Provider>
+            <Context1.Provider value={ { stock } }>
+              <Detail product={product} />  
+            </Context1.Provider>
           // product은 props 방식으로 데이터 전달
           // stock은 context 방식으로 데이터 전달
         } />
@@ -129,6 +133,7 @@ function App() {
           <Route path="two" element={<div>반려동물 생일기념 쿠폰 증정</div>} />
         </Route>
       </Routes>
+      </Suspense>
     </div>
   );
 }
