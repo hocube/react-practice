@@ -10,6 +10,7 @@ import { useQuery } from 'react-query';
 // import Detail from './pages/Detail.js'
 // import Cart from './pages/Cart.js'
 
+
 const Detail = lazy(() => import('./pages/Detail.js')); 
 const Cart = lazy(() => import('./pages/Cart.js'));
 

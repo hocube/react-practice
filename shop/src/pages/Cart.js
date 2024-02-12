@@ -4,9 +4,6 @@ import { changeName, changeAge } from "./../store/userSlice.js";
 import { addCount } from "./../store.js";
 import { useState } from "react";
 
-function 함수(){
-  return 
-}
 
 function Cart() {
   let state = useSelector((state) => {
